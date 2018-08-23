@@ -1,7 +1,9 @@
 import React from 'react';
 
+import './Timer.css'
+
 const timer = (props) => (
-    <div className="timer">
+    <div className="Timer">
         <span>13</span>
         :
         <span>15</span>

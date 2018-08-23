@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faStop, faUndo } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faStop, faUndo, faClock, faBan, faCheck, faBackspace } from '@fortawesome/free-solid-svg-icons';
 
 import Countdown from './container/Countdown/Countdown';
 
-library.add(faPlay, faStop, faUndo);
+import './App.css'
+
+library.add(far, faPlay, faStop, faUndo, faClock, faBan, faCheck, faBackspace);
 
 class App extends Component {
     render() {

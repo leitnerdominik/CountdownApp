@@ -1,0 +1,9 @@
+body {
+    background-color: #3060e8;
+    font-family: 'Karla', sans-serif;
+    color: white;
+}
+
+button {
+    cursor: pointer;
+}
