@@ -50,7 +50,12 @@ class ChangeTimer extends Component {
 
     render() {
 
-        const applyButton = this.state.inputNumber.length > 0 ? <button className="Apply"><FontAwesomeIcon icon="check" size="3x"/></button> : null;
+        const applyButton = this.state.inputNumber.length > 0 ? 
+            <button 
+                className="Apply"
+                onClick={() =>this.props.setTimer(this.state.displayNumber.sec, this.state.displayNumber.min, this.state.displayNumber.hour)}>
+                    <FontAwesomeIcon icon="check" size="3x"/>
+            </button> : null;
         const borderInput = this.state.inputNumber.length > 0 ? '1px solid #3060e8' : null;
 
         return (
