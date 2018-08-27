@@ -15,6 +15,23 @@ module.exports = {
         use: ["babel-loader"]
       },
       {
+        test: /\.mp3$/,
+        loader: 'file-loader',
+        query: {
+          name: 'static/media/[name].[hash:8].[ext]'
+        }
+      },
+      {
+        test: /\.(png|jp(e*)g|svg)$/,  
+        use: [{
+            loader: 'url-loader',
+            options: { 
+                limit: 8000,
+                name: 'images/[hash]-[name].[ext]'
+            } 
+        }]
+      },
+      {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
       }

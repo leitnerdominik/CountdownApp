@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import Push from 'push.js';
 
 import Timer from '../../components/Timer/Timer';
 import Control from '../../components/Control/Control';
 import Modal from '../../components/Modal/Modal';
 import ChangeTimer from '../../components/ChangeTimer/ChangeTimer';
+
+import clockIcon from '../../assets/alarmClock32.png';
+import soundFile from '../../assets/audio.mp3';
 
 
 class Countdown extends Component {
@@ -15,6 +19,12 @@ class Countdown extends Component {
         playing: false,
     }
 
+    componentDidMount() {
+        Push.Permission.request();
+    }
+
+    sound = new Audio(soundFile);
+
     showTimerAddHandler() {
         this.setState({showChangeTime: !this.state.showChangeTime});
     }
@@ -22,6 +32,25 @@ class Countdown extends Component {
     setTimerHandler(sec, min, hour) {
         const sumSec = this.convertToSeconds(Number(sec), Number(min), Number(hour));
         this.setState({sec: sumSec, initTime: sumSec, showChangeTime: !this.state.showChangeTime});
+    }
+
+    handlePushNotification() {
+        Push.create('Time is over!', {
+            body: 'Time is over!',
+            timeout: 5000,
+            icon: {x32: clockIcon},
+            // onClick: () => {
+            //     this.stopSound();
+            // },
+            // onClose: () => {
+            //     this.stopSound();
+            // }
+        });
+    }
+
+    stopSound() {
+        window.focus();
+        this.sound.pause();
     }
 
     startTimer() {
@@ -32,7 +61,9 @@ class Countdown extends Component {
                 if(--duration >= 0) {
                     this.setState({sec: duration});
                 } else {
+                    this.handlePushNotification();
                     clearInterval(this.timer);
+                    // this.sound.play();
                     this.setState({playing: false});
                 }
             }, 1000);
