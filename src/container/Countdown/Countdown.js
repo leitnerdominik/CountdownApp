@@ -21,6 +21,9 @@ class Countdown extends Component {
 
     componentDidMount() {
         Push.Permission.request();
+        // Push.config({
+        //     serviceWorker: '../../serviceWorker.min.js',
+        // })
     }
 
     sound = new Audio(soundFile);
@@ -36,15 +39,15 @@ class Countdown extends Component {
 
     handlePushNotification() {
         Push.create('Time is over!', {
-            body: 'Time is over!',
-            timeout: 5000,
+            body: 'Time is over !',
             icon: {x32: clockIcon},
-            // onClick: () => {
-            //     this.stopSound();
-            // },
-            // onClose: () => {
-            //     this.stopSound();
-            // }
+            timeout: 5000,
+            onClick: () => {
+                this.stopSound();
+            },
+            onClose: () => {
+                this.stopSound();
+            }
         });
     }
 
@@ -55,7 +58,7 @@ class Countdown extends Component {
 
     startTimer() {
         let duration = this.state.sec;
-        if(!this.state.playing) {
+        if(!this.state.playing && this.state.sec > 0) {
             this.setState({playing: true});
             this.timer = setInterval(() => {
                 if(--duration >= 0) {
@@ -63,7 +66,7 @@ class Countdown extends Component {
                 } else {
                     this.handlePushNotification();
                     clearInterval(this.timer);
-                    // this.sound.play();
+                    this.sound.play();
                     this.setState({playing: false});
                 }
             }, 1000);

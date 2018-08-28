@@ -4,5 +4,12 @@
     background-color: #151515;
     width: 550px;
     top: 10%;
-    left: 15%;
+    left: calc((100% - 550px)/2);
+}
+
+@media(max-width: 600px) {
+    .Modal {
+        width: 100%;
+        left: 0;
+    }
 }
