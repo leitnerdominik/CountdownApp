@@ -4,7 +4,7 @@ import Push from 'push.js';
 import Timer from '../../components/Timer/Timer';
 import Control from '../../components/Control/Control';
 import Modal from '../../components/Modal/Modal';
-import ChangeTimer from '../../components/ChangeTimer/ChangeTimer';
+import ChangeTimer from '../ChangeTimer/ChangeTimer';
 
 import clockIcon from '../../assets/alarmClock32.png';
 import soundFile from '../../assets/audio.mp3';

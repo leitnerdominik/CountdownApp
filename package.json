@@ -1,14 +1,14 @@
 {
-  "name": "react-boilerplate",
+  "name": "CountdownApp",
   "version": "1.0.0",
-  "description": "",
+  "description": "a simple countdown App",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production"
   },
   "keywords": [],
-  "author": "",
+  "author": "Dominik Leitner",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.3",

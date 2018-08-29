@@ -21,12 +21,16 @@
     background-color: #2e56c7;
   }
 
-  .Control .Stop {
-    background-color: #E53131;
-    border: none;
-    -webkit-box-shadow: 2px 2px 8px 2px rgba(0,0,0,0.33);
-  -moz-box-shadow: 2px 2px 8px 2px rgba(0,0,0,0.33);
-  box-shadow: 2px 2px 8px 2px rgba(0,0,0,0.33);
+  .Hourglass {
+    color: white;
+    padding: 32px;
+    opacity: 0;
+    animation: rotating 1s infinite;
+    
+  }
+
+  .Hourglass {
+    animation: rotating 1s infinite;
   }
 
 .Control .Stop:active {
@@ -54,5 +58,11 @@
 
     .AddTimer {
         font-size: 22px;
+    }
+}
+
+@keyframes rotating {
+    to {
+        transform: rotate(180deg);
     }
 }

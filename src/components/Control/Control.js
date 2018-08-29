@@ -6,18 +6,23 @@ import './Control.css'
 
 const control = (props) => {
 
-    const pausePlayIcon = props.isPlaying ? "pause" : "play";
-    const playPauseControl = props.isPlaying ? props.pause : props.play; 
-    
+    let pausePlayIcon = "play";
+    let playPauseControl = props.play;
+    let showHourglass = null;
+
+    if(props.isPlaying) {
+        pausePlayIcon = "pause";
+        playPauseControl = props.play;
+        showHourglass = {opacity: '1'};
+    }
+
     return (
         <div>
             <div className="Control">
                 <button onClick={playPauseControl}>
                     <FontAwesomeIcon icon={pausePlayIcon} size="2x"/>
                 </button>
-                <button className="Stop">
-                    <FontAwesomeIcon icon="stop" size="4x"/>
-                </button>
+                <FontAwesomeIcon className="Hourglass" style={showHourglass} icon="hourglass-half" size="4x"/>
                 <button onClick={props.reset}>
                     <FontAwesomeIcon icon="undo" size="2x"/>
                 </button>
