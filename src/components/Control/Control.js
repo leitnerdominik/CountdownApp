@@ -12,7 +12,7 @@ const control = (props) => {
 
     if(props.isPlaying) {
         pausePlayIcon = "pause";
-        playPauseControl = props.play;
+        playPauseControl = props.pause;
         showHourglass = {opacity: '1'};
     }
 
