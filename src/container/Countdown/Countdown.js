@@ -9,7 +9,6 @@ import { formatTime } from '../../util/formatTime';
 
 import clockIcon from '../../assets/alarmClock32.png';
 import soundFile from '../../assets/audio.mp3';
-import { format } from 'url';
 
 
 class Countdown extends Component {
