@@ -28,6 +28,11 @@ const control = (props) => {
                 </button>
             </div>
             <div>
+                <label>Show time in title</label>
+                <label className="Switch" >
+                    <input type="checkbox" onClick={props.toggleTitle} />
+                    <span className="Slider"></span>
+                </label>
                 <button className="AddTimer" onClick={props.addTimer}>
                     <FontAwesomeIcon icon={["far", "clock"]}/> change Timer
                 </button>
