@@ -5,18 +5,21 @@ import Timer from '../../components/Timer/Timer';
 import Control from '../../components/Control/Control';
 import Modal from '../../components/Modal/Modal';
 import ChangeTimer from '../ChangeTimer/ChangeTimer';
+import { formatTime } from '../../util/formatTime';
 
 import clockIcon from '../../assets/alarmClock32.png';
 import soundFile from '../../assets/audio.mp3';
+import { format } from 'url';
 
 
 class Countdown extends Component {
 
     state = {
-        sec: 0,
-        initTime: 0,
+        sec: 600,
+        initTime: 600,
         showChangeTime: false,
         playing: false,
+        showTimeTitle: false,
     }
 
     componentDidMount() {
@@ -24,6 +27,14 @@ class Countdown extends Component {
         // Push.config({
         //     serviceWorker: '../../serviceWorker.min.js',
         // })
+    }
+
+    componentDidUpdate() {
+        if(this.state.showTimeTitle) {
+            this.showBrowserTitle();
+        } else {
+            document.title = 'CountdownApp'
+        }
     }
 
     sound = new Audio(soundFile);
@@ -34,7 +45,9 @@ class Countdown extends Component {
 
     setTimerHandler(sec, min, hour) {
         const sumSec = this.convertToSeconds(Number(sec), Number(min), Number(hour));
-        this.setState({sec: sumSec, initTime: sumSec, showChangeTime: !this.state.showChangeTime});
+        this.setState({sec: sumSec, initTime: sumSec, showChangeTime: !this.state.showChangeTime, playing: false});
+        clearInterval(this.timer);
+
     }
 
     handlePushNotification() {
@@ -49,6 +62,18 @@ class Countdown extends Component {
                 this.stopSound();
             }
         });
+    }
+
+    showBrowserTitle() {
+        const timeObj = formatTime(this.state.sec);
+        document.title = `${timeObj.hours}:${timeObj.minutes}:${timeObj.seconds}`;
+    }
+    
+    toggleShowBrowserTitle(event) {
+        // event.stopPropagation();
+        // event.preventDefault();
+        const showTitle = this.state.showTimeTitle;
+        this.setState({showTimeTitle: !showTitle});
     }
 
     stopSound() {
@@ -98,7 +123,13 @@ class Countdown extends Component {
         return (
             <div>
                 <Timer sec={this.state.sec} />
-                <Control addTimer={this.showTimerAddHandler.bind(this)} isPlaying={this.state.playing} pause={this.stopTimer.bind(this)} play={this.startTimer.bind(this)} reset={this.resetTimer.bind(this)}/>
+                <Control 
+                    addTimer={this.showTimerAddHandler.bind(this)}
+                    isPlaying={this.state.playing}
+                    pause={this.stopTimer.bind(this)}
+                    play={this.startTimer.bind(this)}
+                    reset={this.resetTimer.bind(this)}
+                    toggleTitle={this.toggleShowBrowserTitle.bind(this)}/>
                 <Modal show={this.state.showChangeTime} clicked={this.showTimerAddHandler.bind(this)}>
                     <ChangeTimer cancel={this.showTimerAddHandler.bind(this)} setTimer={this.setTimerHandler.bind(this)} />
                 </Modal>
