@@ -17,40 +17,50 @@
     outline: 0;
   }
   
-  .Control button:active {
+.Control button:active {
     background-color: #2e56c7;
-  }
+}
 
-  .Hourglass {
-    color: white;
-    padding: 32px;
-    opacity: 0;
-    animation: rotating 1s infinite;
-    
-  }
+.Hourglass {
+color: white;
+padding: 32px;
+opacity: 0;
+animation: rotating 1s infinite;
 
-  .Hourglass {
-    animation: rotating 1s infinite;
-  }
+}
+
+.Hourglass {
+animation: rotating 1s infinite;
+}
 
 .Control .Stop:active {
-    background-color: #da1d1d;
+background-color: #da1d1d;
 }
 
 .AddTimer {
+    font-size: inherit;
     background: transparent;
     border: none;
-    font-size: 32px;
     color: white;
-    float: right;
+    display: block;
+    margin-top: 20px;
+}
 
+.ControlFooter {
+    float: right;
+    font-size: 32px;
+}
+
+LblTitle {
+    font-size: inherit;
 }
 
 .Switch {
     position: relative;
     width: 60px;
     height: 34px;
-    display: block;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .Switch input {
@@ -104,8 +114,31 @@
         margin: 40px auto;
     }
 
-    .AddTimer {
+    .ControlFooter {
         font-size: 22px;
+    }
+
+    .Switch {
+        width: 40px;
+        height: 23px;
+    }
+
+    .Slider {
+        border-radius: 23px;
+    }
+
+    .Slider:before {
+        height: 18.5px;
+        width: 18.5px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    .Switch input:checked + .Slider:before {
+        transform: translateX(18.5px);
     }
 }
 

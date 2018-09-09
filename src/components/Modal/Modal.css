@@ -5,6 +5,7 @@
     width: 550px;
     top: 10%;
     left: calc((100% - 550px)/2);
+    transition: all 0.5s ease-out;
 }
 
 @media(max-width: 600px) {

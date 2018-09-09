@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import Push from 'push.js';
+import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions/time';
 
 import Timer from '../../components/Timer/Timer';
 import Control from '../../components/Control/Control';
 import Modal from '../../components/Modal/Modal';
 import ChangeTimer from '../ChangeTimer/ChangeTimer';
+import Settings from '../../components/Settings/Settings';
 import { formatTime } from '../../util/formatTime';
 
 import clockIcon from '../../assets/alarmClock32.png';
@@ -19,6 +22,7 @@ class Countdown extends Component {
         showChangeTime: false,
         playing: false,
         showTimeTitle: false,
+        showSettings: false,
     }
 
     componentDidMount() {
@@ -42,11 +46,17 @@ class Countdown extends Component {
         this.setState({showChangeTime: !this.state.showChangeTime});
     }
 
-    setTimerHandler(sec, min, hour) {
-        const sumSec = this.convertToSeconds(Number(sec), Number(min), Number(hour));
-        this.setState({sec: sumSec, initTime: sumSec, showChangeTime: !this.state.showChangeTime, playing: false});
-        clearInterval(this.timer);
+    // setTimerHandler(sec, min, hour) {
+    //     const sumSec = this.convertToSeconds(Number(sec), Number(min), Number(hour));
+    //     this.setState({sec: sumSec, initTime: sumSec, showChangeTime: !this.state.showChangeTime, playing: false});
+    //     clearInterval(this.timer);
 
+    // }
+
+    setTimeHandler(sec, min, hour) {
+        this.props.onSetTimer(sec, min, hour);
+        this.setState({showChangeTime: !this.state.showChangeTime});
+        clearInterval(this.timer);
     }
 
     handlePushNotification() {
@@ -81,17 +91,17 @@ class Countdown extends Component {
     }
 
     startTimer() {
-        let duration = this.state.sec;
-        if(!this.state.playing && this.state.sec > 0) {
-            this.setState({playing: true});
+        // let duration = this.props.seconds;
+        if(!this.props.playing && this.props.seconds) {
+            this.props.togglePlayTimer;
             this.timer = setInterval(() => {
-                if(--duration >= 0) {
-                    this.setState({sec: duration});
+                if(this.props.seconds) {
+                    this.props.reduceTime;
                 } else {
                     this.handlePushNotification();
                     clearInterval(this.timer);
                     this.sound.play();
-                    this.setState({playing: false});
+                    this.props.togglePlayTimer;
                 }
             }, 1000);
         }
@@ -108,29 +118,37 @@ class Countdown extends Component {
         this.setState({sec: initTime, playing: false});
     }
 
-    convertToSeconds(sec, min, hour) {
-        let sumSec = 0;
-        const minSec = min * 60;
-        const hourSec = hour * 60 * 60;
+    // convertToSeconds(sec, min, hour) {
+    //     let sumSec = 0;
+    //     const minSec = min * 60;
+    //     const hourSec = hour * 60 * 60;
 
-        sumSec = sec + minSec + hourSec;
+    //     sumSec = sec + minSec + hourSec;
 
-        return sumSec;
+    //     return sumSec;
+    // }
+
+    showSettings() {
+        oldShowSettings = this.state.showSettings;
+        this.setState({showSettings: !oldShowSettings});
     }
 
     render() {
+        console.log(this.props.seconds);
         return (
             <div>
-                <Timer sec={this.state.sec} />
+                {/* <Modal show={this.state.showSettings} clicked={this.showSettings.bind(this)}> */}
+                <Settings />
+                <Timer sec={this.props.seconds} />
                 <Control 
                     addTimer={this.showTimerAddHandler.bind(this)}
-                    isPlaying={this.state.playing}
+                    isPlaying={this.props.playing}
                     pause={this.stopTimer.bind(this)}
                     play={this.startTimer.bind(this)}
                     reset={this.resetTimer.bind(this)}
                     toggleTitle={this.toggleShowBrowserTitle.bind(this)}/>
                 <Modal show={this.state.showChangeTime} clicked={this.showTimerAddHandler.bind(this)}>
-                    <ChangeTimer cancel={this.showTimerAddHandler.bind(this)} setTimer={this.setTimerHandler.bind(this)} />
+                    <ChangeTimer cancel={this.showTimerAddHandler.bind(this)} setTimer={this.setTimeHandler.bind(this)} />
                 </Modal>
             </div>
         );
@@ -138,4 +156,19 @@ class Countdown extends Component {
     }
 }
 
-export default Countdown;
+const mapStateToProps = state => {
+    return {
+        seconds: state.sec,
+        playing: state.playing
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSetTimer: (sec, min, hour) => dispatch(actionCreators.setTimer(sec, min, hour)),
+        togglePlayTimer: () => dispatch(actionCreators.togglePlaying),
+        reduceTime: () => dispatch(actionCreators.reduceTimer)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Countdown)  ;
