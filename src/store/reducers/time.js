@@ -23,13 +23,13 @@ const timeReducer = (state = initialState, action) => {
                 sec: sumSec
             }
         case actionTypes.TOGGLE_PLAYING:
-            const currentPlaying = this.state.playing;
+            const currentPlaying = state.playing;
             return {
                 ...state,
                 playing: !currentPlaying,
             }
         case actionTypes.REDUCE_TIME:
-            const currentTime = this.state.sec;
+            const currentTime = state.sec;
             return {
                 ...state,
                 sec: currentTime - 1,

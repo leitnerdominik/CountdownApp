@@ -23,13 +23,3 @@ export const reduceTime = () => {
         type: actionTypes.REDUCE_TIME
     };
 };
-
-export const countdown = () => {
-    console.log('[COUNTDOWN]');
-    return dispatch => {
-        console.log('[COUNTDOWN DISPATCH]');
-        setTimeout(() => {
-            dispatch(reduceTime());
-        } ,1000);
-    };
-};
