@@ -90,22 +90,23 @@ class Countdown extends Component {
         this.sound.pause();
     }
 
-    startTimer() {
-        // let duration = this.props.seconds;
-        if(!this.props.playing && this.props.seconds) {
-            this.props.togglePlayTimer;
-            this.timer = setInterval(() => {
-                if(this.props.seconds) {
-                    this.props.reduceTime;
-                } else {
-                    this.handlePushNotification();
-                    clearInterval(this.timer);
-                    this.sound.play();
-                    this.props.togglePlayTimer;
-                }
-            }, 1000);
-        }
-    }
+    // startTimer() {
+    //     // let duration = this.props.seconds;
+    //     if(!this.props.playing && this.props.seconds) {
+    //         this.props.togglePlayTimer;
+    //         this.timer = setInterval(() => {
+    //             this.props.reduceTime();
+    //             // if(this.props.seconds) {
+    //             //     this.props.reduceTime;
+    //             // } else {
+    //             //     this.handlePushNotification();
+    //             //     clearInterval(this.timer);
+    //             //     this.sound.play();
+    //             //     this.props.togglePlayTimer;
+    //             // }
+    //         }, 1000);
+    //     }
+    // }
 
     stopTimer() {
         clearInterval(this.timer);
@@ -144,7 +145,7 @@ class Countdown extends Component {
                     addTimer={this.showTimerAddHandler.bind(this)}
                     isPlaying={this.props.playing}
                     pause={this.stopTimer.bind(this)}
-                    play={this.startTimer.bind(this)}
+                    play={this.props.countdown}
                     reset={this.resetTimer.bind(this)}
                     toggleTitle={this.toggleShowBrowserTitle.bind(this)}/>
                 <Modal show={this.state.showChangeTime} clicked={this.showTimerAddHandler.bind(this)}>
@@ -167,7 +168,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onSetTimer: (sec, min, hour) => dispatch(actionCreators.setTimer(sec, min, hour)),
         togglePlayTimer: () => dispatch(actionCreators.togglePlaying),
-        reduceTime: () => dispatch(actionCreators.reduceTimer)
+        countdown: () => dispatch(actionCreators.countdown)
     }
 }
 
