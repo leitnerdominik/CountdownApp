@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     sec: 600,
+    initSec: 600,
     playing: false,
 };
 
@@ -20,19 +21,26 @@ const timeReducer = (state = initialState, action) => {
             const sumSec = convertToSeconds(action.payload.sec, action.payload.min, action.payload.hour);
             return {
                 ...state,
-                sec: sumSec
+                sec: sumSec,
+                initSec: sumSec,
             }
         case actionTypes.TOGGLE_PLAYING:
-            const currentPlaying = state.playing;
             return {
                 ...state,
-                playing: !currentPlaying,
+                playing: action.payload.enable
             }
         case actionTypes.REDUCE_TIME:
             const currentTime = state.sec;
             return {
                 ...state,
                 sec: currentTime - 1,
+            }
+        case actionTypes.RESET_TIMER:
+            const initTime = state.initSec;
+            return {
+                ...state,
+                sec: initTime,
+                playing: false,
             }
     }
 

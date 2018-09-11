@@ -17,10 +17,7 @@ import soundFile from '../../assets/audio.mp3';
 class Countdown extends Component {
 
     state = {
-        sec: 600,
-        initTime: 600,
         showChangeTime: false,
-        playing: false,
         showTimeTitle: false,
         showSettings: false,
     }
@@ -55,6 +52,7 @@ class Countdown extends Component {
 
     setTimeHandler(sec, min, hour) {
         this.props.onSetTimer(sec, min, hour);
+        this.props.togglePlayTimer(false);
         this.setState({showChangeTime: !this.state.showChangeTime});
         clearInterval(this.timer);
     }
@@ -92,14 +90,14 @@ class Countdown extends Component {
 
     startTimer() {
         if(!this.props.playing && this.props.seconds) {
-            this.props.togglePlayTimer();
+            this.props.togglePlayTimer(true);
             this.timer = setInterval(() => {
                 if(this.props.seconds) {
                     this.props.reduceTime();
                 } else {
                     clearInterval(this.timer);
                     this.sound.play();
-                    this.props.togglePlayTimer();
+                    this.props.togglePlayTimer(false);
                     console.log('TIME OUT!!!');
                 }
             }, 1000);
@@ -108,13 +106,12 @@ class Countdown extends Component {
 
     stopTimer() {
         clearInterval(this.timer);
-        this.props.togglePlayTimer();
+        this.props.togglePlayTimer(false);
     }
 
     resetTimer() {
-        const initTime = this.state.initTime;
         clearInterval(this.timer);
-        this.setState({sec: initTime, playing: false});
+        this.props.resetTimer();
     }
 
     // convertToSeconds(sec, min, hour) {
@@ -133,7 +130,6 @@ class Countdown extends Component {
     }
 
     render() {
-        console.log(this.props.seconds);
         return (
             <div>
                 {/* <Modal show={this.state.showSettings} clicked={this.showSettings.bind(this)}> */}
@@ -165,8 +161,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onSetTimer: (sec, min, hour) => dispatch(actionCreators.setTimer(sec, min, hour)),
-        togglePlayTimer: () => dispatch(actionCreators.togglePlaying()),
-        reduceTime: () => dispatch(actionCreators.reduceTime())
+        togglePlayTimer: (enable) => dispatch(actionCreators.togglePlaying(enable)),
+        reduceTime: () => dispatch(actionCreators.reduceTime()),
+        resetTimer: () => dispatch(actionCreators.resetTimer())
     }
 }
 

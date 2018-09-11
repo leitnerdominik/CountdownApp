@@ -11,15 +11,23 @@ export const setTimer = (sec, min, hour) => {
     }
 };
 
-export const togglePlaying = () => {
+export const togglePlaying = (enable) => {
     return {
-        type: actionTypes.TOGGLE_PLAYING
+        type: actionTypes.TOGGLE_PLAYING,
+        payload: {
+            enable: enable,
+        }
     };
 };
 
 export const reduceTime = () => {
-    console.log('[REDUCE_TIME]');
     return {
         type: actionTypes.REDUCE_TIME
+    };
+};
+
+export const resetTimer = () => {
+    return {
+        type: actionTypes.RESET_TIMER
     };
 };
