@@ -125,7 +125,8 @@ class Countdown extends Component {
     // }
 
     showSettings() {
-        oldShowSettings = this.state.showSettings;
+        console.log('[Countdown.js] showSettings');
+        const oldShowSettings = this.state.showSettings;
         this.setState({showSettings: !oldShowSettings});
     }
 
@@ -133,7 +134,7 @@ class Countdown extends Component {
         return (
             <div>
                 {/* <Modal show={this.state.showSettings} clicked={this.showSettings.bind(this)}> */}
-                <Settings />
+                <Settings show={this.state.showSettings} clicked={this.showSettings.bind(this)} />
                 <Timer sec={this.props.seconds} />
                 <Control 
                     addTimer={this.showTimerAddHandler.bind(this)}
@@ -142,7 +143,7 @@ class Countdown extends Component {
                     play={this.startTimer.bind(this)}
                     reset={this.resetTimer.bind(this)}
                     toggleTitle={this.toggleShowBrowserTitle.bind(this)}/>
-                <Modal show={this.state.showChangeTime} clicked={this.showTimerAddHandler.bind(this)}>
+                <Modal key="changetimer" show={this.state.showChangeTime} clicked={this.showTimerAddHandler.bind(this)}>
                     <ChangeTimer cancel={this.showTimerAddHandler.bind(this)} setTimer={this.setTimeHandler.bind(this)} />
                 </Modal>
             </div>
