@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import Modal from '../Modal/Modal';
+import Modal from '../UI/Modal/Modal';
 import SettingsPanel from './SettingsPanel/SettingsPanel';
 
 import './Settings.css';

@@ -5,7 +5,7 @@ import * as actionCreators from '../../store/actions/time';
 
 import Timer from '../../components/Timer/Timer';
 import Control from '../../components/Control/Control';
-import Modal from '../../components/Modal/Modal';
+import Modal from '../../components/UI/Modal/Modal';
 import ChangeTimer from '../ChangeTimer/ChangeTimer';
 import Settings from '../../components/Settings/Settings';
 import { formatTime } from '../../util/formatTime';

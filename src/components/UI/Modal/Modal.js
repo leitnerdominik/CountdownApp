@@ -6,8 +6,6 @@ import './Modal.css'
 
 
 const modal = (props) => {
-    console.log('[Modal.js] props.show: ', props.show);
-
     return (
         <div>
             <Backdrop show={props.show} clicked={props.clicked} />
