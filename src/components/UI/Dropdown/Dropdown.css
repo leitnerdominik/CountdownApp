@@ -1,5 +1,5 @@
 .SelectContainer {
-    width: 60%;
+    width: 100%;
 }
 
 .SelectDropDown {
@@ -15,7 +15,6 @@
     font-size: 16px;
     padding-left: 10px;
     outline: none;
-    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     cursor: pointer;
 }
@@ -34,11 +33,11 @@
 
 .SelectContainer::before {
     font-family: fontello;
-    content: "\f107";
+    content: "\25be";
     font-size: 20px;
-    color: green;
+    color: black;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 15px;
+    top: 5px;
     pointer-events: none;
 };
