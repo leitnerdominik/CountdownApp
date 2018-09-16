@@ -38,12 +38,13 @@ background-color: #da1d1d;
 }
 
 .AddTimer {
-    font-size: inherit;
     background: transparent;
     border: none;
     color: white;
     display: block;
     margin-top: 20px;
+    float: right;
+    font-size: 32px;
 }
 
 

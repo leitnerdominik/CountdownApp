@@ -4,9 +4,9 @@ import './toggleSwitch.css';
 
 const toggleSwitch = props => (
     <div>
-        <label className="Switch" >
-            <input type="checkbox" onClick={props.toggleTitle} />
-            <span className="ToggleSwitch"></span>
+        <label className="Switch">
+            <input type="checkbox" />
+            <span className="ToggleSwitch" onClick={props.clicked}></span>
         </label>
     </div>
 );

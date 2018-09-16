@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 // import Push from 'push.js';
 import { connect } from 'react-redux';
-import * as actionCreators from '../../store/actions/time';
+import * as actionCreators from '../../store/actions/index';
 
 import Timer from '../../components/Timer/Timer';
 import Control from '../../components/Control/Control';
 import Modal from '../../components/UI/Modal/Modal';
 import ChangeTimer from '../ChangeTimer/ChangeTimer';
-import Settings from '../../components/Settings/Settings';
-import { formatTime } from '../../util/formatTime';
+import Settings from '../Settings/Settings';
 
 import clockIcon from '../../assets/alarmClock32.png';
 import soundFile from '../../assets/audio.mp3';
@@ -29,14 +28,6 @@ class Countdown extends Component {
     //     // })
     // }
 
-    componentDidUpdate() {
-        if(this.state.showTimeTitle) {
-            this.showBrowserTitle();
-        } else {
-            document.title = 'CountdownApp'
-        }
-    }
-
     sound = new Audio(soundFile);
 
     showTimerAddHandler() {
@@ -54,7 +45,12 @@ class Countdown extends Component {
         this.props.onSetTimer(sec, min, hour);
         this.props.togglePlayTimer(false);
         this.setState({showChangeTime: !this.state.showChangeTime});
-        clearInterval(this.timer);
+        console.log('[Countdown.js]', this.props.startInstantly);
+        if(this.props.startInstantly) {
+            this.startTimer();
+        } else {
+            clearInterval(this.timer);
+        }
     }
 
     // handlePushNotification() {
@@ -70,18 +66,13 @@ class Countdown extends Component {
     //         }
     //     });
     // }
-
-    showBrowserTitle() {
-        const timeObj = formatTime(this.state.sec);
-        document.title = `${timeObj.hours}:${timeObj.minutes}:${timeObj.seconds}`;
-    }
     
-    toggleShowBrowserTitle(event) {
-        // event.stopPropagation();
-        // event.preventDefault();
-        const showTitle = this.state.showTimeTitle;
-        this.setState({showTimeTitle: !showTitle});
-    }
+    // toggleShowBrowserTitle(event) {
+    //     // event.stopPropagation();
+    //     // event.preventDefault();
+    //     const showTitle = this.state.showTimeTitle;
+    //     this.setState({showTimeTitle: !showTitle});
+    // }
 
     stopSound() {
         window.focus();
@@ -125,7 +116,6 @@ class Countdown extends Component {
     // }
 
     showSettings() {
-        console.log('[Countdown.js] showSettings');
         const oldShowSettings = this.state.showSettings;
         this.setState({showSettings: !oldShowSettings});
     }
@@ -134,16 +124,15 @@ class Countdown extends Component {
         return (
             <div>
                 {/* <Modal show={this.state.showSettings} clicked={this.showSettings.bind(this)}> */}
-                <Settings show={this.state.showSettings} clicked={this.showSettings.bind(this)} />
+                <Settings show={this.state.showSettings} sec={this.props.seconds} clicked={this.showSettings.bind(this)} />
                 <Timer sec={this.props.seconds} />
                 <Control 
                     addTimer={this.showTimerAddHandler.bind(this)}
                     isPlaying={this.props.playing}
                     pause={this.stopTimer.bind(this)}
                     play={this.startTimer.bind(this)}
-                    reset={this.resetTimer.bind(this)}
-                    toggleTitle={this.toggleShowBrowserTitle.bind(this)}/>
-                <Modal key="changetimer" show={this.state.showChangeTime} clicked={this.showTimerAddHandler.bind(this)}>
+                    reset={this.resetTimer.bind(this)}/>
+                <Modal show={this.state.showChangeTime} clicked={this.showTimerAddHandler.bind(this)}>
                     <ChangeTimer cancel={this.showTimerAddHandler.bind(this)} setTimer={this.setTimeHandler.bind(this)} />
                 </Modal>
             </div>
@@ -154,8 +143,9 @@ class Countdown extends Component {
 
 const mapStateToProps = state => {
     return {
-        seconds: state.sec,
-        playing: state.playing
+        seconds: state.time.sec,
+        playing: state.time.playing,
+        startInstantly: state.settings.startInstantly
     };
 };
 
