@@ -9,17 +9,25 @@ import Modal from '../../components/UI/Modal/Modal';
 import ChangeTimer from '../ChangeTimer/ChangeTimer';
 import Settings from '../Settings/Settings';
 
-import clockIcon from '../../assets/alarmClock32.png';
-import soundFile from '../../assets/audio.mp3';
+// import clockIcon from '../../assets/alarmClock32.png';
+
 
 
 class Countdown extends Component {
 
-    state = {
-        showChangeTime: false,
-        showTimeTitle: false,
-        showSettings: false,
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showChangeTime: false,
+            showTimeTitle: false,
+            showSettings: false,
+        };
+
+        this.audio = new Audio();
     }
+
+    
 
     // componentDidMount() {
     //     Push.Permission.request();
@@ -27,8 +35,6 @@ class Countdown extends Component {
     //     //     serviceWorker: '../../serviceWorker.min.js',
     //     // })
     // }
-
-    sound = new Audio(soundFile);
 
     showTimerAddHandler() {
         this.setState({showChangeTime: !this.state.showChangeTime});
@@ -43,12 +49,12 @@ class Countdown extends Component {
 
     setTimeHandler(sec, min, hour) {
         this.props.onSetTimer(sec, min, hour);
-        this.props.togglePlayTimer(false);
         this.setState({showChangeTime: !this.state.showChangeTime});
         console.log('[Countdown.js]', this.props.startInstantly);
         if(this.props.startInstantly) {
             this.startTimer();
         } else {
+            this.props.togglePlayTimer(false);
             clearInterval(this.timer);
         }
     }
@@ -124,7 +130,7 @@ class Countdown extends Component {
         return (
             <div>
                 {/* <Modal show={this.state.showSettings} clicked={this.showSettings.bind(this)}> */}
-                <Settings show={this.state.showSettings} sec={this.props.seconds} clicked={this.showSettings.bind(this)} />
+                <Settings show={this.state.showSettings} songs={this.sounds} sec={this.props.seconds} clicked={this.showSettings.bind(this)} />
                 <Timer sec={this.props.seconds} />
                 <Control 
                     addTimer={this.showTimerAddHandler.bind(this)}

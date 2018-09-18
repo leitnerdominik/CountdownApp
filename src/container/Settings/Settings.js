@@ -18,6 +18,9 @@ class Settings extends Component {
     constructor(props) {
         super(props);
         this.toggleShowTitleHandler = this.toggleShowTitleHandler.bind(this);
+        this.songChangeHandler = this.songChangeHandler.bind(this);
+
+        this.audio = new Audio();
     }
 
     state = {
@@ -35,9 +38,21 @@ class Settings extends Component {
     }
 
     toggleShowTitleHandler() {
-        console.log('[Settings.js] toggleTitle');
         const oldIsTitleEnabled = this.state.isTitleEnabled;
         this.setState({isTitleEnabled: !oldIsTitleEnabled});
+    }
+
+    songChangeHandler(event) {
+        const songIndex = event.target.value;
+        this.props.onSetSong(songIndex);
+        
+        const currentSong = this.props.selectedSong;
+        console.log(currentSong);
+        this.audio.src = currentSong;
+        this.audio.play();
+
+        setTimeout(() => this.audio.pause(), 2000);
+        
     }
 
     render() {
@@ -46,18 +61,31 @@ class Settings extends Component {
             <FontAwesomeIcon icon="cog" size="4x" onClick={this.props.clicked}>
             </FontAwesomeIcon>
             <Modal show={this.props.show} clicked={this.props.clicked}>
-                <SettingsPanel close={this.props.clicked} startInstantly={this.props.onStartInstantly} toggleTitle={this.toggleShowTitleHandler}/>   
+                <SettingsPanel 
+                    close={this.props.clicked}
+                    songs={this.props.displaySongs}
+                    change={this.songChangeHandler}
+                    startInstantly={this.props.onStartInstantly}
+                    toggleTitle={this.toggleShowTitleHandler}/>   
             </Modal>
         </div>
         );
     };
 };
 
+const mapStateToProps = state => {
+    return {
+        displaySongs: state.settings.displaySongs,
+        selectedSong: state.settings.selectedSong
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
-        onStartInstantly: () => dispatch(actionCreators.startInstantly())
+        onStartInstantly: () => dispatch(actionCreators.startInstantly()),
+        onSetSong: (songIndex) => dispatch(actionCreators.setSong(songIndex))
     };
 };
 
 
-export default connect(null, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

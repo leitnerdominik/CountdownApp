@@ -5,8 +5,6 @@ import './SettingsPanel.css';
 import ToggleSwitch from '../UI/ToggleSwitch/ToggleSwitch';
 import Dropdown from '../UI/Dropdown/Dropdown';
 
-const exampleSongs = ['Song1', 'Song2', 'Song3', 'Song4'];
-
 const settingsPanel = props => {
     return (
         <div className="SettingsPanelContainer">
@@ -15,7 +13,7 @@ const settingsPanel = props => {
             <label className="SettingsLabel Slbl2">Start Timer instantly:</label>
             <ToggleSwitch clicked={props.startInstantly}/>
             <label className="SettingsLabel Slbl3">Change sound:</label>
-            <Dropdown options={exampleSongs}/>
+            <Dropdown options={props.songs} change={props.change}/>
             <div className="SettingsFooter">
                 <button onClick={props.close} style={{color: 'red'}}>CLOSE</button>
                 {/* <button style={{color: 'green'}}>SAVE CHANGES</button> */}

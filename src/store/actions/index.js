@@ -6,5 +6,6 @@ export {
 } from './time';
 
 export {
-    startInstantly
+    startInstantly,
+    setSong
 } from './settings';

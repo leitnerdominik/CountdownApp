@@ -5,10 +5,10 @@ import './Dropdown.css';
 const dropDown = props => (
     <div style={{position: 'relative'}}>
         <div className="SelectContainer">
-            <select className="SelectDropDown">
+            <select className="SelectDropDown" onChange={props.change}>
             {props.options.map((option, index) => {
                 return (
-                    <option value={index + 1} key={index}>{option}</option>
+                    <option value={index} key={index}>{option}</option>
                 );
             })}
             </select>
