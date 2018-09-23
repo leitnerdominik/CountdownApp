@@ -52,7 +52,7 @@
 }
 
 
-@media(max-width: 600px) {
+/* @media(max-width: 600px) {
     .ControlFooter {
         font-size: 22px;
     }
@@ -79,4 +79,4 @@
     .Switch input:checked + .ToggleSwitch:before {
         transform: translateX(18.5px);
     }
-}
+} */

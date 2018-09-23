@@ -1,41 +1,21 @@
 .SettingsPanelContainer {
     width: 100%;
     background-color:#111111;
-
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-row-gap: 15px;
-    grid-template-areas: 
-        "settingsText1 settings1"
-        "settingsText2 settings2"
-        "settingsText3 settings3"
-        "footer footer";
-
-    padding: 20px 10px;
     font-family: 'Raleway', sans-serif;
 }
 
 
-.SettingsLabel {
+.SettingsPanelGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-row-gap: 15px;
+    padding: 20px 10px;
     font-size: 32px;
-    color: #ccc;
-}
-
-.Slbl1 {
-    grid-area: settingsText1;
-}
-
-.Slbl2 {
-    grid-area: settingsText2;
-}
-
-.Slbl3 {
-    grid-area: settingsText3;
 }
 
 .SettingsFooter {
-    grid-area: footer;
-    padding-top: 20px;
+    margin: 20px 0;
 }
 
 .SettingsFooter button {
@@ -46,4 +26,16 @@
     font-family: inherit;
     font-weight: bold;
     font-size: 20px;
+}
+
+@media(max-width: 600px) {
+    .SettingsPanelGrid {
+        font-size: 7vw;
+    }
+
+    .SoundDropdown {
+        position: relative; 
+        top: 15px;
+        right: 4px;
+    }
 }

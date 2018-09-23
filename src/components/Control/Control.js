@@ -9,12 +9,27 @@ const control = (props) => {
     let pausePlayIcon = "play";
     let playPauseControl = props.play;
     let showHourglass = null;
-
+    
     if(props.isPlaying) {
         pausePlayIcon = "pause";
         playPauseControl = props.pause;
         showHourglass = {opacity: '1'};
     }
+
+    let middleControl = <FontAwesomeIcon className="Hourglass" style={showHourglass} icon="hourglass-half" size="4x"/>;
+    
+    if(props.timeOver) {
+        middleControl = (
+            <div className="StopContainer">
+                <div>
+                    <button className="Stop" onClick={props.stopAlarm}><FontAwesomeIcon icon="stop" size="4x"/></button>
+                </div>
+                <label className="LabelStop">Stop Alarm!</label>
+            </div>
+        );
+
+    }
+
 
     return (
         <div>
@@ -22,12 +37,11 @@ const control = (props) => {
                 <button onClick={playPauseControl}>
                     <FontAwesomeIcon icon={pausePlayIcon} size="2x"/>
                 </button>
-                <FontAwesomeIcon className="Hourglass" style={showHourglass} icon="hourglass-half" size="4x"/>
+                {middleControl}
                 <button onClick={props.reset}>
                     <FontAwesomeIcon icon="undo" size="2x"/>
                 </button>
             </div>
-            
             <div style={{
                 margin: '0 auto'
             }}>

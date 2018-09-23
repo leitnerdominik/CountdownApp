@@ -22,6 +22,7 @@ class Countdown extends Component {
             showChangeTime: false,
             showTimeTitle: false,
             showSettings: false,
+            isTimeOver: false
         };
 
         this.audio = new Audio();
@@ -47,10 +48,19 @@ class Countdown extends Component {
 
     // }
 
+    // componentDidUpdate() {
+    //     if(this.props.startInstantly && !this.props.playing) {
+    //         this.startTimer();
+    //     }
+    // }
+
     setTimeHandler(sec, min, hour) {
         this.props.onSetTimer(sec, min, hour);
         this.setState({showChangeTime: !this.state.showChangeTime});
-        console.log('[Countdown.js]', this.props.startInstantly);
+        if(this.state.isTimeOver) {
+            this.stopAlarm();
+        }
+
         if(this.props.startInstantly) {
             this.startTimer();
         } else {
@@ -93,12 +103,18 @@ class Countdown extends Component {
                     this.props.reduceTime();
                 } else {
                     clearInterval(this.timer);
-                    this.sound.play();
+                    this.audio.src = this.props.song;
+                    this.audio.play();
                     this.props.togglePlayTimer(false);
-                    console.log('TIME OUT!!!');
+                    this.setState({isTimeOver: true});
                 }
             }, 1000);
         }
+    }
+
+    stopAlarm() {
+        this.audio.pause();
+        this.setState({isTimeOver: false});
     }
 
     stopTimer() {
@@ -109,17 +125,8 @@ class Countdown extends Component {
     resetTimer() {
         clearInterval(this.timer);
         this.props.resetTimer();
+        this.stopAlarm();
     }
-
-    // convertToSeconds(sec, min, hour) {
-    //     let sumSec = 0;
-    //     const minSec = min * 60;
-    //     const hourSec = hour * 60 * 60;
-
-    //     sumSec = sec + minSec + hourSec;
-
-    //     return sumSec;
-    // }
 
     showSettings() {
         const oldShowSettings = this.state.showSettings;
@@ -130,14 +137,16 @@ class Countdown extends Component {
         return (
             <div>
                 {/* <Modal show={this.state.showSettings} clicked={this.showSettings.bind(this)}> */}
-                <Settings show={this.state.showSettings} songs={this.sounds} sec={this.props.seconds} clicked={this.showSettings.bind(this)} />
+                <Settings show={this.state.showSettings} sec={this.props.seconds} clicked={this.showSettings.bind(this)} />
                 <Timer sec={this.props.seconds} />
                 <Control 
                     addTimer={this.showTimerAddHandler.bind(this)}
                     isPlaying={this.props.playing}
                     pause={this.stopTimer.bind(this)}
                     play={this.startTimer.bind(this)}
-                    reset={this.resetTimer.bind(this)}/>
+                    reset={this.resetTimer.bind(this)}
+                    timeOver={this.state.isTimeOver}
+                    stopAlarm={this.stopAlarm.bind(this)}/>
                 <Modal show={this.state.showChangeTime} clicked={this.showTimerAddHandler.bind(this)}>
                     <ChangeTimer cancel={this.showTimerAddHandler.bind(this)} setTimer={this.setTimeHandler.bind(this)} />
                 </Modal>
@@ -151,7 +160,9 @@ const mapStateToProps = state => {
     return {
         seconds: state.time.sec,
         playing: state.time.playing,
-        startInstantly: state.settings.startInstantly
+        timeOver: state.time.timeOver,
+        startInstantly: state.settings.startInstantly,
+        song: state.settings.selectedSong
     };
 };
 

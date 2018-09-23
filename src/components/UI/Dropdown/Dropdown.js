@@ -3,9 +3,9 @@ import React from 'react';
 import './Dropdown.css';
 
 const dropDown = props => (
-    <div style={{position: 'relative'}}>
+    <div>
         <div className="SelectContainer">
-            <select className="SelectDropDown" onChange={props.change}>
+            <select className="SelectDropDown" onChange={props.change} onClick={props.change}>
             {props.options.map((option, index) => {
                 return (
                     <option value={index} key={index}>{option}</option>

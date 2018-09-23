@@ -7,5 +7,6 @@ export {
 
 export {
     startInstantly,
-    setSong
+    setSong,
+    setVolume
 } from './settings';

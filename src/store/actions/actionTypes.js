@@ -5,3 +5,4 @@ export const RESET_TIMER = 'RESET_TIMER';
 
 export const START_INSTANTLY = 'START_INSTANTLY';
 export const SET_SONG = 'SET_SONG';
+export const SET_VOLUME = 'SET_VOLUME';

@@ -8,11 +8,14 @@ import submarineAlarm from '../../assets/sounds/submarine-diving-alarm.mp3';
 
 
 const songs =  [analogAlarm, shephardAlarm, doorBellAlarm, schoolBellAlarm, submarineAlarm];
+const volume = [25, 50, 75, 100];
 
 const initialState = {
     startInstantly: false,
     displaySongs: ['Analog watch', 'German Shephard', 'Door bell', 'School bell', 'Submarine diving'],
-    selectedSong: analogAlarm
+    displayVolume: ['25%', '50%', '75%', '100%'],
+    selectedSong: analogAlarm,
+    selectedVolume: 50
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,11 +27,16 @@ const reducer = (state = initialState, action) => {
                 startInstantly: newStartInstantly
             };
         case actionTypes.SET_SONG:
-            const newSong = songs[action.index];
             return {
                 ...state,
-                selectedSong: newSong
+                selectedSong: songs[action.index]
             };
+        case actionTypes.SET_VOLUME:
+            return {
+                ...state,
+                selectedVolume: volume[action.index]
+            }
+        
     };
     return state;
 }

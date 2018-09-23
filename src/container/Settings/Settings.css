@@ -3,4 +3,9 @@
     cursor: pointer;
 }
 
+@media (max-width: 600px) {
+    .CogIcon {
+        font-size: 32px;
+    }
+}
 

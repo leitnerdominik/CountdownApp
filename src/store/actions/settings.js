@@ -9,6 +9,13 @@ export const startInstantly = () => {
 export const setSong = (index) => {
     return {
         type: actionTypes.SET_SONG,
-        index: index,
+        index: index
+    };
+};
+
+export const setVolume = (index) => {
+    return {
+        type: actionTypes.SET_VOLUME,
+        index: index
     };
 };
