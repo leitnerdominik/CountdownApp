@@ -1,6 +1,6 @@
 {
   "name": "CountdownApp",
-  "version": "1.1",
+  "version": "1.1.0",
   "description": "a simple countdown App",
   "main": "index.js",
   "scripts": {
