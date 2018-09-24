@@ -136,7 +136,6 @@ class Countdown extends Component {
     render() {
         return (
             <div>
-                {/* <Modal show={this.state.showSettings} clicked={this.showSettings.bind(this)}> */}
                 <Settings show={this.state.showSettings} sec={this.props.seconds} clicked={this.showSettings.bind(this)} />
                 <Timer sec={this.props.seconds} />
                 <Control 
@@ -148,7 +147,11 @@ class Countdown extends Component {
                     timeOver={this.state.isTimeOver}
                     stopAlarm={this.stopAlarm.bind(this)}/>
                 <Modal show={this.state.showChangeTime} clicked={this.showTimerAddHandler.bind(this)}>
-                    <ChangeTimer cancel={this.showTimerAddHandler.bind(this)} setTimer={this.setTimeHandler.bind(this)} />
+                    {this.state.showChangeTime
+                        ? <ChangeTimer 
+                                cancel={this.showTimerAddHandler.bind(this)}
+                                setTimer={this.setTimeHandler.bind(this)} />
+                        : null}
                 </Modal>
             </div>
         );

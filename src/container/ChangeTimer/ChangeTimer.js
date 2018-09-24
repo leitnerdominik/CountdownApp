@@ -6,12 +6,38 @@ import './ChangeTimer.css'
 
 class ChangeTimer extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.inputHandler = this.inputHandler.bind(this);
+        this.keyDownHandler = this.keyDownHandler.bind(this);
+        this.deleteInput = this.deleteInput.bind(this);
+        this.displayInputHandler = this.displayInputHandler.bind(this);
+    }
+    
     state = {
         inputNumber: '',
         displayNumber: {
             hour: '00',
             min: '00',
             sec: '00',
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.keyDownHandler);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.keyDownHandler);
+    }
+
+
+    keyDownHandler(event) {
+        if(Number.isInteger(Number(event.key))) {
+            this.inputHandler(event.key);
+        } else if(event.key === 'Backspace') {
+            this.deleteInput();
         }
     }
 
@@ -44,7 +70,7 @@ class ChangeTimer extends Component {
 
         number = number.slice(0, -1);
 
-        this.setState({inputNumber: number}, this.displayInputHandler.bind(this))
+        this.setState({inputNumber: number}, this.displayInputHandler)
 
     }
 
@@ -64,7 +90,7 @@ class ChangeTimer extends Component {
                 {this.state.displayNumber.hour}h
                 {this.state.displayNumber.min}m
                 {this.state.displayNumber.sec}s
-            <FontAwesomeIcon style={{marginLeft: '30px', cursor: 'pointer'}} icon="backspace" onClick={this.deleteInput.bind(this)} />
+            <FontAwesomeIcon style={{marginLeft: '30px', cursor: 'pointer'}} icon="backspace" onClick={this.deleteInput} />
             </div>
             <div className="NumberInput">
                 <div>
