@@ -58,7 +58,6 @@ class Settings extends Component {
         audio.src = this.props.selectedSong;
         const volume = this.props.selectedVolume / 100;
         audio.volume = volume;
-        console.log('props: ', this.props.selectedSong);
         audio.play();
         setTimeout(() => audio.pause(), 2000);
     }

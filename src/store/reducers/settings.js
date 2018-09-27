@@ -15,7 +15,7 @@ const initialState = {
     displaySongs: ['Analog watch', 'German Shephard', 'Door bell', 'School bell', 'Submarine diving'],
     displayVolume: ['25%', '50%', '75%', '100%'],
     selectedSong: analogAlarm,
-    selectedVolume: 50
+    selectedVolume: 25
 };
 
 const reducer = (state = initialState, action) => {
